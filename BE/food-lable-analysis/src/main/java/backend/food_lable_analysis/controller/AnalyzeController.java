@@ -36,8 +36,19 @@ public class AnalyzeController {
 		}
 
 
-	    return analyzeService.analyze(labelType);
+		try {
+		    byte[] imageBytes = image.getBytes();
+		    return analyzeService.analyze(imageBytes, labelType);
+		} catch (Exception e) {
+		    throw new ResponseStatusException(
+		            HttpStatus.INTERNAL_SERVER_ERROR,
+		            "Failed to process image"
+		    );
+		}
+
 	}
+	
+	
 
 
 }
