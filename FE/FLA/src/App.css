@@ -368,6 +368,19 @@ body {
   color: var(--gray);
 }
 
+.history-section {
+  padding: 1rem 0;
+}
+
+.history-card button:hover {
+  background: var(--light) !important;
+}
+
+.history-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
 .send-button {
   background: var(--gradient);
   color: var(--white);
