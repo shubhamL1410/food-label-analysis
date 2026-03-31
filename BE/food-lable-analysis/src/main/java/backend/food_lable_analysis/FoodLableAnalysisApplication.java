@@ -9,6 +9,4 @@ public class FoodLableAnalysisApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FoodLableAnalysisApplication.class, args);
 	}
-
 }
-	

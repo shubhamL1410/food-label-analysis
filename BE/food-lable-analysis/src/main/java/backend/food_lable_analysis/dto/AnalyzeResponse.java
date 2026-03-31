@@ -2,23 +2,16 @@ package backend.food_lable_analysis.dto;
 
 public class AnalyzeResponse {
 
-    private int rating;
     private String explanation;
+    private String prediction;
+    private Integer healthScore;
+    private String rawResponse;
 
     public AnalyzeResponse() {
     }
 
-    public AnalyzeResponse(int rating, String explanation) {
-        this.rating = rating;
+    public AnalyzeResponse(String explanation) {
         this.explanation = explanation;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
     }
 
     public String getExplanation() {
@@ -27,5 +20,29 @@ public class AnalyzeResponse {
 
     public void setExplanation(String explanation) {
         this.explanation = explanation;
+    }
+
+    public String getPrediction() {
+        return prediction;
+    }
+
+    public void setPrediction(String prediction) {
+        this.prediction = prediction;
+    }
+
+    public Integer getHealthScore() {
+        return healthScore;
+    }
+
+    public void setHealthScore(Integer healthScore) {
+        this.healthScore = healthScore;
+    }
+
+    public String getRawResponse() {
+        return rawResponse;
+    }
+
+    public void setRawResponse(String rawResponse) {
+        this.rawResponse = rawResponse;
     }
 }

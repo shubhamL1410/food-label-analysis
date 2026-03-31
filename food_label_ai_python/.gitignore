@@ -1,0 +1,65 @@
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv/
+
+# Environment Variables
+.env
+.env.*
+
+# Logs
+*.log
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Model Files (Large ML files)
+*.pkl
+*.joblib
+*.h5
+*.pt
+*.pth
+
+# Dataset Files
+datasets/
+data/
+*.csv
+*.xlsx
+
+# Temporary / uploads 
+uploads/
+temp/
+tmp/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Build / Distribution
+build/
+dist/
+*.egg-info/
+
+# Testing
+.coverage
+.pytest_cache/
+
+# Database
+*.sqlite3
+
+# FastAPI / Flask cache
+*.db
+instance/
+.project

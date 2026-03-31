@@ -47,7 +47,7 @@ public class AnalyzeController {
      * Authenticated endpoint: nutrition or ingredients analysis.
      * Requires JWT. Enforced by SecurityConfig.
      */
-    @PostMapping(value = "/analyze", consumes = "multipart/form-data")
+    @PostMapping(value = "/api/analyze", consumes = "multipart/form-data")
     public AnalyzeResponse analyzeFoodLabel(
             @RequestParam("image") MultipartFile image,
             @RequestParam("labelType") String labelType) {

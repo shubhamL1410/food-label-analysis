@@ -1,50 +1,78 @@
 package backend.food_lable_analysis.service;
 
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.stereotype.Service;
-
 import backend.food_lable_analysis.dto.AnalyzeResponse;
-import backend.food_lable_analysis.ml.IFoodLabelModel;
-
-
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.http.MediaType;
+import org.springframework.web.reactive.function.BodyInserters;
 
 @Service
 public class AnalyzeService {
-	
-	@Autowired
-	@Qualifier("nutritionModel")
-	private IFoodLabelModel nutritionModel;
 
-	@Autowired
-	@Qualifier("ingredientModel")
-	private IFoodLabelModel ingredientModel;
+    private final WebClient webClient;
+    private final ObjectMapper objectMapper;
 
-	
-	@Autowired
-	private GeminiService geminiService;
-	
-	
-	public AnalyzeResponse analyze(byte[] imageData, String labelType) {
+    @Value("${fastapi.base-url}")
+    private String fastApiBaseUrl;
 
-	    int rating;
+    public AnalyzeService(WebClient webClient, ObjectMapper objectMapper) {
+        this.webClient = webClient;
+        this.objectMapper = objectMapper;
+    }
 
-	    if ("nutrition".equalsIgnoreCase(labelType)) {
-	        rating = nutritionModel.predictRating(imageData);
-	    } else if ("ingredient".equalsIgnoreCase(labelType)) {
-	        rating = ingredientModel.predictRating(imageData);
-	    } else {
-	        rating = 0;
-	    }
+    public AnalyzeResponse analyze(byte[] imageData, String labelType) {
 
-	    String explanation = geminiService.generateExplanation(rating, labelType);
-	    
-	    AnalyzeResponse response = new AnalyzeResponse();
-	    response.setRating(rating);
-	    response.setExplanation(explanation);
+        String endpoint = labelType.equalsIgnoreCase("nutrition")
+                ? "/predict/nutrition"
+                : "/predict/ingredient";
 
-	    return response;
-	}
+        JsonNode resultNode = webClient.post()
+                .uri(fastApiBaseUrl + endpoint)
+                .contentType(MediaType.MULTIPART_FORM_DATA)
+                .body(BodyInserters.fromMultipartData("file",
+                        new ByteArrayResource(imageData) {
+                            @Override
+                            public String getFilename() {
+                                return "image.jpg";
+                            }
+                        }))
+                .retrieve()
+                .bodyToMono(JsonNode.class)
+                .block();
 
+        AnalyzeResponse response = new AnalyzeResponse();
+        if (resultNode == null) {
+            response.setExplanation("No response from prediction service");
+            return response;
+        }
 
+        JsonNode predictionNode = resultNode.get("prediction");
+        String prediction = predictionNode != null && !predictionNode.isNull()
+                ? predictionNode.asText()
+                : "Prediction unavailable";
+
+        JsonNode scoreNode = resultNode.get("health_score");
+        Integer healthScore = scoreNode != null && scoreNode.isNumber()
+                ? scoreNode.asInt()
+                : null;
+
+        response.setPrediction(prediction);
+        response.setExplanation(prediction);
+        response.setHealthScore(healthScore);
+        response.setRawResponse(safeToJson(resultNode));
+
+        return response;
+    }
+
+    private String safeToJson(JsonNode resultNode) {
+        try {
+            return objectMapper.writeValueAsString(resultNode);
+        } catch (Exception ex) {
+            return resultNode.toString();
+        }
+    }
 }
- 

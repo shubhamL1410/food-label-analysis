@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+joblib
+pandas
+numpy
+opencv-python
+pytesseract
+easyocr
+rapidfuzz
+scikit-learn
+xgboost
+python-multipart
