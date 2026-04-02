@@ -42,7 +42,6 @@ food-label-analysis/
 ├── BE/ #backend with models, services, configs for JWT and OTP verification system
 ├── frontend/ # UI part
 ├── food_label_ai_python/ # python backend for Text extraction , getting model prediction and score with FastAPI and model which is trained
-├── .gitignore
 └── README.md
 
 
