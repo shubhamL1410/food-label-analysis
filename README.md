@@ -24,28 +24,25 @@ Food Label Analysis is designed to help users understand what they are consuming
 ## 🛠️ Tech Stack
 
 ### Frontend:
-- HTML, CSS, JavaScript
-- (React / Vue if used)
+- React
 
 ### Backend:
-- Python (Flask / FastAPI)
-- OCR (Tesseract / EasyOCR)
-- Machine Learning (Scikit-learn / Custom Model)
+- Spring (REST APIs)
 
-### Additional:
-- Image Processing
-- REST APIs
+### ML Backend
+- Python(Fast API)
+- ML Model(sk-learn)
+- Image extraction(EasyOCR / pytesseract)
 
 ---
 
 ## 📂 Project Structure
 food-label-analysis/
 │
-├── backend/ # Python backend (OCR + ML)
+├── BE/ #backend with models, services, configs for JWT and OTP verification system
 ├── frontend/ # UI part
-├── spring-api/ # (Optional Java backend if used)
-├── dataset/ # Training data (not uploaded)
-├── models/ # Trained models (ignored in git)
+├── food_label_ai_python/ # python backend for Text extraction , getting model prediction and score with FastAPI and model which is trained
+├── .gitignore
 └── README.md
 
 
@@ -53,7 +50,7 @@ food-label-analysis/
 
 ### 1️⃣ Clone the Repository
 
-git clone https://github.com/your-username/food-label-analysis.git  
+git clone https://github.com/ShubhamL1410/food-label-analysis.git  
 cd food-label-analysis
 
 ---
