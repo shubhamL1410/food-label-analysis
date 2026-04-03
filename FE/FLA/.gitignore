@@ -12,7 +12,7 @@ node_modules/
 # Build outputs
 dist/
 dist-ssr/
-images/
+public/
 
 # Environment
 *.local
