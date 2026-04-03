@@ -63,7 +63,7 @@ This backend handles:
 
 ### Setup Steps:
 
-cd backend  
+cd food_label_ai_python
 pip install -r requirements.txt  
 
 # Run FastAPI server
@@ -80,7 +80,7 @@ This backend handles:
 
 ### Setup Steps:
 
-cd spring-api  
+cd BE/food-lable-analysis
 
 # Using Maven
 mvn clean install  
@@ -96,7 +96,7 @@ OR run from your IDE (IntelliJ / STS)
 
 ### Setup Steps:
 
-cd frontend  
+cd FE/FLA
 npm install  
 npm run dev  
 
