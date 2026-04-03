@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { apiFetch } from "../services/api";
 
 function Register({ onRegisterSuccess }) {
   const [username, setUsername] = useState("");
@@ -27,7 +28,7 @@ function Register({ onRegisterSuccess }) {
 
     try {
       setIsLoading(true);
-      const res = await fetch(`/auth/send-otp?email=${encodeURIComponent(gmail)}`, {
+      const res = await apiFetch(`/auth/send-otp?email=${encodeURIComponent(gmail)}`, {
         method: "POST",
       });
 
@@ -65,7 +66,7 @@ function Register({ onRegisterSuccess }) {
 
     try {
       setIsLoading(true);
-      const response = await fetch("/auth/verify-otp", {
+      const response = await apiFetch("/auth/verify-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -103,7 +104,7 @@ function Register({ onRegisterSuccess }) {
     try {
       setIsLoading(true);
 
-      const response = await fetch("/auth/register", {
+      const response = await apiFetch("/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -126,7 +127,7 @@ function Register({ onRegisterSuccess }) {
       setMessage("Account created! Logging you in...");
 
       // Auto-login after successful registration
-      const loginRes = await fetch("/auth/login", {
+      const loginRes = await apiFetch("/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

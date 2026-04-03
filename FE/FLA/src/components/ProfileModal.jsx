@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { apiFetch } from "../services/api";
 
 function ProfileModal({ isOpen, onClose, getAuthHeaders }) {
   const [username, setUsername] = useState("");
@@ -21,7 +22,7 @@ function ProfileModal({ isOpen, onClose, getAuthHeaders }) {
   const fetchProfile = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/user/profile", { headers: getAuthHeaders() });
+      const res = await apiFetch("/api/user/profile", { headers: getAuthHeaders() });
       if (!res.ok) {
         setError("Failed to load profile");
         return;
@@ -44,7 +45,7 @@ function ProfileModal({ isOpen, onClose, getAuthHeaders }) {
     setMessage("");
     setSaving(true);
     try {
-      const res = await fetch("/api/user/profile", {
+      const res = await apiFetch("/api/user/profile", {
         method: "PUT",
         headers: { "Content-Type": "application/json", ...getAuthHeaders() },
         body: JSON.stringify({

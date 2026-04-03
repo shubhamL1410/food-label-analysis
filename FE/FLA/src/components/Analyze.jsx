@@ -5,6 +5,7 @@ import TrafficLight, { getPredictionStatus } from "./TrafficLight/TrafficLight";
 import HealthScoreRing from "./HealthScoreRing";
 import PredictionResultCard from "./PredictionResultCard";
 import ProfileModal from "./ProfileModal";
+import { apiFetch } from "../services/api";
 
 function Analyze({ isLoggedIn, navigateToLogin }) {
   const [image, setImage] = useState(null);
@@ -233,7 +234,7 @@ function Analyze({ isLoggedIn, navigateToLogin }) {
 
     try {
       setIsLoading(true);
-      const response = await fetch(url, { method: "POST", headers, body: formData });
+      const response = await apiFetch(url, { method: "POST", headers, body: formData });
 
       if (!response.ok) {
         const text = await response.text();
@@ -283,7 +284,7 @@ function Analyze({ isLoggedIn, navigateToLogin }) {
 
     try {
       setIsAnalyzeTextLoading(true);
-      const response = await fetch("/api/food/analyze-text", {
+      const response = await apiFetch("/api/food/analyze-text", {
         method: "POST",
         headers: { "Content-Type": "application/json", ...getAuthHeaders() },
         body: JSON.stringify({ extractedText: lastExtractedText, labelType: lastLabelType }),
@@ -328,7 +329,7 @@ function Analyze({ isLoggedIn, navigateToLogin }) {
       const formData = new FormData();
       formData.append("image", image);
 
-      const response = await fetch("/api/food/suggest", {
+      const response = await apiFetch("/api/food/suggest", {
         method: "POST",
         headers: getAuthHeaders(),
         body: formData,
@@ -394,7 +395,7 @@ function Analyze({ isLoggedIn, navigateToLogin }) {
         suggestData: suggestion || null,
       };
 
-      const response = await fetch("/api/chat/save", {
+      const response = await apiFetch("/api/chat/save", {
         method: "POST",
         headers: { "Content-Type": "application/json", ...getAuthHeaders() },
         body: JSON.stringify(chatRequest),

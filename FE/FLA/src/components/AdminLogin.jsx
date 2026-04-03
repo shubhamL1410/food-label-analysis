@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { apiFetch } from "../services/api";
 
 function AdminLogin({ onLoginSuccess }) {
   const [credentials, setCredentials] = useState({
@@ -21,7 +22,7 @@ function AdminLogin({ onLoginSuccess }) {
     setIsLoading(true);
 
     try {
-      const response = await fetch("/auth/login", {
+      const response = await apiFetch("/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(credentials),

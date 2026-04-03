@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { apiFetch } from "../services/api";
 
 function AdminDashboard({ isAdmin, navigateToAdminLogin }) {
   const [stats, setStats] = useState(null);
@@ -17,9 +18,9 @@ function AdminDashboard({ isAdmin, navigateToAdminLogin }) {
     setError("");
     try {
       const [statsRes, usersRes, chatsRes] = await Promise.all([
-        fetch("/api/admin/stats", { headers: getAuthHeaders() }),
-        fetch("/api/admin/users", { headers: getAuthHeaders() }),
-        fetch("/api/admin/chats", { headers: getAuthHeaders() }),
+        apiFetch("/api/admin/stats", { headers: getAuthHeaders() }),
+        apiFetch("/api/admin/users", { headers: getAuthHeaders() }),
+        apiFetch("/api/admin/chats", { headers: getAuthHeaders() }),
       ]);
 
       if ([statsRes, usersRes, chatsRes].some((r) => r.status === 401 || r.status === 403)) {
@@ -69,7 +70,7 @@ function AdminDashboard({ isAdmin, navigateToAdminLogin }) {
   const handleDeleteUser = async (id) => {
     if (!window.confirm("Delete this user and all related records?")) return;
     try {
-      const res = await fetch(`/api/admin/users/${id}`, {
+      const res = await apiFetch(`/api/admin/users/${id}`, {
         method: "DELETE",
         headers: getAuthHeaders(),
       });
@@ -87,7 +88,7 @@ function AdminDashboard({ isAdmin, navigateToAdminLogin }) {
   const handleDeleteChat = async (id) => {
     if (!window.confirm("Delete this chat record?")) return;
     try {
-      const res = await fetch(`/api/admin/chats/${id}`, {
+      const res = await apiFetch(`/api/admin/chats/${id}`, {
         method: "DELETE",
         headers: getAuthHeaders(),
       });

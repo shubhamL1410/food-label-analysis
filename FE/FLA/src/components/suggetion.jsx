@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { apiFetch } from "../services/api";
 
 function Suggetion() {
   const [image, setImage] = useState(null);
@@ -23,9 +24,7 @@ function Suggetion() {
     try {
       setIsLoading(true);
 
-      // If you added Vite proxy for '/api', this will work without CORS.
-      // Otherwise replace with: "http://localhost:8080/api/food/suggest"
-      const response = await fetch("/api/food/suggest", {
+      const response = await apiFetch("/api/food/suggest", {
         method: "POST",
         body: formData,
       });

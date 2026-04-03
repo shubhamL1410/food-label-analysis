@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import TrafficLight, { getPredictionStatus } from "./TrafficLight/TrafficLight";
 import HealthScoreRing from "./HealthScoreRing";
+import { apiFetch } from "../services/api";
 
 function getImageSrc(imageUrl) {
   if (!imageUrl) return "";
@@ -30,7 +31,7 @@ function ViewChatSingle({ isLoggedIn, navigateToLogin }) {
     let cancelled = false;
     (async () => {
       try {
-        const res = await fetch(`/api/chat/${id}`, { headers: getAuthHeaders() });
+        const res = await apiFetch(`/api/chat/${id}`, { headers: getAuthHeaders() });
         if (!res.ok) {
           if (res.status === 401 || res.status === 403) {
             localStorage.removeItem("jwtToken");

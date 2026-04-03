@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ProfileModal from "./ProfileModal";
+import { apiFetch } from "../services/api";
 
 function ViewChatList({ isLoggedIn, navigateToLogin }) {
   const [chatList, setChatList] = useState([]);
@@ -21,7 +22,7 @@ function ViewChatList({ isLoggedIn, navigateToLogin }) {
     let cancelled = false;
     (async () => {
       try {
-        const res = await fetch("/api/chat/", { headers: getAuthHeaders() });
+        const res = await apiFetch("/api/chat/", { headers: getAuthHeaders() });
         if (!res.ok) {
           if (res.status === 401 || res.status === 403) {
             localStorage.removeItem("jwtToken");
