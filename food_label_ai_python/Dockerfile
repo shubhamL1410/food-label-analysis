@@ -7,18 +7,14 @@ WORKDIR /app
 # ── Install system dependencies ─────────────────────────────────
 # Tesseract OCR + OpenCV + EasyOCR all need these system libs
 RUN apt-get update && apt-get install -y \
-    # Tesseract OCR binary
     tesseract-ocr \
     tesseract-ocr-eng \
-    # OpenCV dependencies
-    libgl1-mesa-glx \
+    libgl1 \
     libglib2.0-0 \
     libsm6 \
     libxext6 \
     libxrender-dev \
-    # EasyOCR / PyTorch dependencies
     libgomp1 \
-    # General utilities
     wget \
     curl \
     && apt-get clean \

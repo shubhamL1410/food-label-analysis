@@ -4,6 +4,7 @@ import joblib
 import pandas as pd
 import pytesseract
 from rapidfuzz import fuzz
+import os
 
 from app.ocr_utils import extract_nutrition_ocr_payload, extract_nutrition_table_texts, extract_text_candidates
 
@@ -16,9 +17,14 @@ pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tessera
 # =========================
 # LOAD TRAINED MODEL FILES
 # =========================
-MODEL_PATH = "models/nutrition_rf_model.pkl"
-ENCODER_PATH = "models/nutrition_label_encoder.pkl"
-FEATURES_PATH = "models/nutrition_feature_columns.pkl"
+
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MODEL_PATH = os.path.join(BASE_DIR, "models",  "nutrition_rf_model.pkl")
+ENCODER_PATH = os.path.join(BASE_DIR, "models",  "nutrition_label_encoder.pkl")
+FEATURES_PATH = os.path.join(BASE_DIR, "models",  "nutrition_feature_columns.pkl")
+
+
 
 model = joblib.load(MODEL_PATH)
 label_encoder = joblib.load(ENCODER_PATH)

@@ -1,6 +1,7 @@
 import re
 
 import joblib
+import os
 import pytesseract
 from rapidfuzz import fuzz
 
@@ -8,8 +9,13 @@ from app.ocr_utils import extract_text_candidates
 
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
-pipeline = joblib.load(r"models\ingridient_xgb_pipeline.pkl")
-label_encoder = joblib.load(r"models\ingridient_label_encoder.pkl")
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MODEL_PATH = os.path.join(BASE_DIR, "models", "ingridient_xgb_pipeline.pkl")
+
+ENCODER_PATH =os.path.join(BASE_DIR, "models", "ingridient_label_encoder.pkl") 
+
+pipeline = joblib.load(MODEL_PATH)
+label_encoder = joblib.load(ENCODER_PATH)
 
 BASE_SCORES = {
     "healthy": 85,
