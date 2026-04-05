@@ -15,13 +15,13 @@ public class AdminSeeder implements CommandLineRunner {
     private final IUserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
 
-    @Value("${admin.username:admin}")
+    @Value("${admin.username}")
     private String adminUsername;
 
-    @Value("${admin.email:admin@foodlabel.local}")
+    @Value("${admin.email}")
     private String adminEmail;
 
-    @Value("${admin.password:Admin@123}")
+    @Value("${admin.password}")
     private String adminPassword;
 
     public AdminSeeder(IUserRepo userRepo, PasswordEncoder passwordEncoder) {
